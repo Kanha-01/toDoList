@@ -1,0 +1,36 @@
+<%- include("header") -%>
+
+    <div class="box" id="heading">
+        <h1>
+            <%= listType %>
+        </h1>
+    </div>
+
+    <div class="box">
+        <% for(var i=0; i<newItems.length; i++){ %>
+            <div class="item">
+                <form action="/toggle" method="post" class="left">
+                    <input type="hidden" name="id" value="<%= newItems[i]._id %>">
+                    <input type="hidden" name="listType" value="<%= listType %>">
+                    <input type="checkbox" name="completed" onchange="this.form.submit()" <%=newItems[i].completed ? "checked" : "" %>>
+                    <p style="<%= newItems[i].completed ? 'text-decoration: line-through;' : '' %>">
+                        <%= newItems[i].name %>
+                    </p>
+                </form>
+
+                <form action="/delete" method="post">
+                    <input type="hidden" name="listType" value="<%= listType %>">
+                    <button class="remove-btn" type="submit" name="id" value="<%=newItems[i]._id %>">remove</button>
+                </form>
+            </div>
+            <% } %>
+
+                <form class="item input" action="/" method="post">
+                    <input type="text" name="newInput" placeholder="add Items to toDolist" autocomplete="off">
+                    <button class="add-btn" type="submit" name="listType" value="<%= listType %>">+</button>
+                </form>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <%- include("footer") -%>
